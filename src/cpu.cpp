@@ -55,7 +55,7 @@ void CPU::execute()
     case 0:
         switch (inst.z)
         {
-        case 6:
+        case 6: // LD r[y], n
             write_register(inst.y, safe_read(pc++));
             break;
         }
