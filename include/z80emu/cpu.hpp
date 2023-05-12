@@ -7,49 +7,10 @@ namespace Z80
     class CPU
     {
     private:
-        inline uint16_t safe_read(uint16_t address)
-        {
-            if (read != nullptr)
-            {
-                return read(address);
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        inline void safe_write(uint16_t address, uint8_t value)
-        {
-            if (write != nullptr)
-            {
-                write(address, value);
-            }
-        }
-
-        inline uint8_t read_register(uint8_t reg)
-        {
-            if (reg == 6)
-            {
-                return safe_read((main[4] << 8) | main[5]);
-            }
-            else
-            {
-                return main[reg];
-            }
-        }
-
-        inline void write_register(uint8_t reg, uint8_t value)
-        {
-            if (reg == 6)
-            {
-                safe_write((main[4] << 8) | main[5], value);
-            }
-            else
-            {
-                main[reg] = value;
-            }
-        }
+        uint16_t safe_read(uint16_t);
+        void safe_write(uint16_t, uint8_t);
+        uint8_t read_register(uint8_t);
+        void write_register(uint8_t, uint8_t);
 
     public:
         uint8_t main[8] = {0, 0, 0, 0, 0, 0, 0, 0};
