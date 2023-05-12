@@ -3,7 +3,6 @@
 
 namespace Z80
 {
-
     class CPU
     {
     private:
