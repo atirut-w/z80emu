@@ -27,7 +27,33 @@ namespace Z80
             }
         }
 
+        inline uint8_t read_register(uint8_t reg)
+        {
+            if (reg == 6)
+            {
+                return safe_read((main[4] << 8) | main[5]);
+            }
+            else
+            {
+                return main[reg];
+            }
+        }
+
+        inline void write_register(uint8_t reg, uint8_t value)
+        {
+            if (reg == 6)
+            {
+                safe_write((main[4] << 8) | main[5], value);
+            }
+            else
+            {
+                main[reg] = value;
+            }
+        }
+
     public:
+        uint8_t main[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+        uint8_t alt[8] = {0, 0, 0, 0, 0, 0, 0, 0};
         uint16_t pc = 0;
 
         uint16_t (*read)(uint16_t) = nullptr;
