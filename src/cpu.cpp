@@ -88,5 +88,6 @@ void CPU::execute()
             alu(inst.y, safe_read(pc++));
             break;
         }
+        break;
     }
 }
