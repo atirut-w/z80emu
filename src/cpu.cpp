@@ -46,6 +46,27 @@ void CPU::write_register(uint8_t reg, uint8_t value)
     }
 }
 
+void CPU::alu(uint8_t op, uint8_t value)
+{
+    uint16_t result;
+
+    switch (op)
+    {
+    case 0: // ADD
+        result = main[7] + value;
+        main_flags ^= Flags::N;
+        if (result > 0xFF)
+        {
+            main_flags |= Flags::P;
+        }
+        break;
+    }
+
+    main[7] = result & 0xFF;
+    // TODO: Set flags
+}
+
+// TODO: Simulate T-States
 void CPU::execute()
 {
     Instruction inst = Instruction(safe_read(pc++));
@@ -60,5 +81,12 @@ void CPU::execute()
             break;
         }
         break;
+    case 3:
+        switch (inst.z)
+        {
+        case 6: // alu[y] n
+            alu(inst.y, safe_read(pc++));
+            break;
+        }
     }
 }

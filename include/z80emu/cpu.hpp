@@ -12,6 +12,8 @@ namespace Z80
         uint8_t read_register(uint8_t);
         void write_register(uint8_t, uint8_t);
 
+        void alu(uint8_t, uint8_t);
+
     public:
         uint8_t main[8] = {0, 0, 0, 0, 0, 0, 0, 0};
         uint8_t alt[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -39,5 +41,15 @@ namespace Z80
             p = y >> 1;
             q = y & 1;
         }
+    };
+
+    enum Flags
+    {
+        C = 1 << 0,
+        N = 1 << 1,
+        P = 1 << 2,
+        H = 1 << 4,
+        Z = 1 << 6,
+        S = 1 << 7,
     };
 }
