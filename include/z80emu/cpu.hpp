@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <functional>
 
 namespace Z80
 {
@@ -16,8 +17,8 @@ namespace Z80
         uint8_t alt[8] = {0, 0, 0, 0, 0, 0, 0, 0};
         uint16_t pc = 0;
 
-        uint16_t (*read)(uint16_t) = nullptr;
-        void (*write)(uint16_t, uint8_t) = nullptr;
+        std::function<uint16_t(uint16_t)> read;
+        std::function<void(uint16_t, uint8_t)> write;
 
         void execute();
     };
