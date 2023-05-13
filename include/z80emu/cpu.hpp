@@ -7,7 +7,7 @@ namespace Z80
     class CPU
     {
     private:
-        uint16_t safe_read(uint16_t);
+        uint8_t safe_read(uint16_t);
         void safe_write(uint16_t, uint8_t);
         uint8_t read_register(uint8_t);
         void write_register(uint8_t, uint8_t);
@@ -22,7 +22,7 @@ namespace Z80
 
         uint16_t pc = 0;
 
-        std::function<uint16_t(uint16_t)> read;
+        std::function<uint8_t(uint16_t)> read;
         std::function<void(uint16_t, uint8_t)> write;
 
         void execute();

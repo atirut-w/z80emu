@@ -2,7 +2,7 @@
 
 using namespace Z80;
 
-uint16_t CPU::safe_read(uint16_t address)
+uint8_t CPU::safe_read(uint16_t address)
 {
     if (read != nullptr)
     {
