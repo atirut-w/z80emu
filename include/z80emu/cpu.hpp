@@ -15,6 +15,9 @@ namespace Z80
     public:
         uint8_t main[8] = {0, 0, 0, 0, 0, 0, 0, 0};
         uint8_t alt[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+        uint8_t main_flags = 0;
+        uint8_t alt_flags = 0;
+
         uint16_t pc = 0;
 
         std::function<uint16_t(uint16_t)> read;
