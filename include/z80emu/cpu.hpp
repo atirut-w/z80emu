@@ -25,7 +25,7 @@ namespace Z80
         std::function<uint8_t(uint16_t)> read;
         std::function<void(uint16_t, uint8_t)> write;
 
-        void execute();
+        uint8_t execute();
     };
 
     class Instruction

@@ -66,8 +66,7 @@ void CPU::alu(uint8_t op, uint8_t value)
     // TODO: Set flags
 }
 
-// TODO: Simulate T-States
-void CPU::execute()
+uint8_t CPU::execute()
 {
     Instruction inst = Instruction(safe_read(pc++));
 
@@ -78,7 +77,7 @@ void CPU::execute()
         {
         case 6: // LD r[y], n
             write_register(inst.y, safe_read(pc++));
-            break;
+            return 7;
         }
         break;
     case 3:
@@ -86,8 +85,10 @@ void CPU::execute()
         {
         case 6: // alu[y] n
             alu(inst.y, safe_read(pc++));
-            break;
+            return 4;
         }
         break;
     }
+
+    return 4; // NOP
 }
