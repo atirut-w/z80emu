@@ -66,29 +66,29 @@ void CPU::alu(uint8_t op, uint8_t value)
         break;
     }
 
+    if (result & 0x80)
+    {
+        main_flags |= Flags::S;
+    }
+    else
+    {
+        main_flags &= ~Flags::S;
+    }
+
+    if ((uint8_t)result == 0)
+    {
+        main_flags |= Flags::Z;
+    }
+    else
+    {
+        main_flags &= ~Flags::Z;
+    }
+
     // TODO: Flags for bitwise operations and compare
     switch (op)
     {
     case 0:
     case 1:
-        if (result & 0x80)
-        {
-            main_flags |= Flags::S;
-        }
-        else
-        {
-            main_flags &= ~Flags::S;
-        }
-
-        if ((uint8_t)result == 0)
-        {
-            main_flags |= Flags::Z;
-        }
-        else
-        {
-            main_flags &= ~Flags::Z;
-        }
-
         if ((main[7] & 0xf) + (value & 0xf) > 0xf)
         {
             main_flags |= Flags::H;
@@ -121,24 +121,6 @@ void CPU::alu(uint8_t op, uint8_t value)
         break;
     case 2:
     case 3:
-        if (result & 0x80)
-        {
-            main_flags |= Flags::S;
-        }
-        else
-        {
-            main_flags &= ~Flags::S;
-        }
-
-        if ((uint8_t)result == 0)
-        {
-            main_flags |= Flags::Z;
-        }
-        else
-        {
-            main_flags &= ~Flags::Z;
-        }
-
         if ((main[7] & 0xf) < (value & 0xf))
         {
             main_flags |= Flags::H;
