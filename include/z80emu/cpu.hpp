@@ -22,6 +22,7 @@ namespace Z80
         uint8_t main_flags = 0;
         uint8_t alt_flags = 0;
 
+        uint16_t sp = 0;
         uint16_t pc = 0;
 
         std::function<uint8_t(uint16_t)> read;

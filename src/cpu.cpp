@@ -57,7 +57,7 @@ void CPU::write_rp(uint8_t pair, uint16_t value, bool af)
         }
         else
         {
-            int i = 0;
+            sp = value;
         }
     }
     else
