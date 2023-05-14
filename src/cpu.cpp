@@ -71,7 +71,7 @@ void CPU::alu(uint8_t op, uint8_t value)
     {
     case 0:
     case 1:
-        if ((int8_t)result < 0)
+        if (result & 0x80)
         {
             main_flags |= Flags::S;
         }
@@ -98,18 +98,21 @@ void CPU::alu(uint8_t op, uint8_t value)
             main_flags &= ~Flags::H;
         }
 
-        if (result > 0xff)
+        if ((main[7] & 0x80) == (value & 0x80))
         {
-            main_flags |= Flags::P;
-        }
-        else
-        {
-            main_flags &= ~Flags::P;
+            if ((main[7] & 0x80) != (result & 0x80))
+            {
+                main_flags |= Flags::P;
+            }
+            else
+            {
+                main_flags &= ~Flags::P;
+            }
         }
 
         main_flags &= ~Flags::N;
 
-        if (result > 0xff)
+        if (result & 0x100)
         {
             main_flags |= Flags::C;
         }
