@@ -11,6 +11,8 @@ namespace Z80
         void safe_write(uint16_t, uint8_t);
         uint8_t read_register(uint8_t);
         void write_register(uint8_t, uint8_t);
+        uint16_t read_rp(uint8_t, bool = false);
+        void write_rp(uint8_t, uint16_t, bool = false);
 
         void alu(uint8_t, uint8_t);
 

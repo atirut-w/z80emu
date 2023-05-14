@@ -46,6 +46,27 @@ void CPU::write_register(uint8_t reg, uint8_t value)
     }
 }
 
+void CPU::write_rp(uint8_t pair, uint16_t value, bool af)
+{
+    if (pair == 3)
+    {
+        if (af)
+        {
+            main[7] = value >> 8;
+            main_flags = value & 0xff;
+        }
+        else
+        {
+            int i = 0;
+        }
+    }
+    else
+    {
+        main[pair * 2] = value >> 8;
+        main[(pair * 2) + 1] = value & 0xff;
+    }
+}
+
 void CPU::alu(uint8_t op, uint8_t value)
 {
     uint16_t result;
@@ -164,6 +185,20 @@ uint8_t CPU::execute()
     case 0:
         switch (inst.z)
         {
+        case 1: // 16-bit load immediate/add
+            if (inst.q == 0)
+            {
+                // LD rp[p], nn
+                uint8_t lsb = safe_read(pc++);
+                uint8_t msb = safe_read(pc++);
+                write_rp(inst.p, (msb << 8) | lsb);
+                return 10;
+            }
+            else
+            {
+                // TODO: ADD HL, rp[p]
+                return 11;
+            }
         case 6: // LD r[y], n
             write_register(inst.y, safe_read(pc++));
             return 7;
