@@ -54,16 +54,23 @@ void CPU::alu(uint8_t op, uint8_t value)
     {
     case 0: // ADD
         result = main[7] + value;
-        main_flags ^= Flags::N;
-        if (result > 0xFF)
-        {
-            main_flags |= Flags::P;
-        }
         break;
     }
 
     main[7] = result & 0xFF;
-    // TODO: Set flags
+    // TODO: Flags for subtraction, bitwise operations and compare
+    switch (op)
+    {
+    case 0:
+    case 1:
+        (int8_t)result < 0 ? main_flags |= Flags::S : main_flags &= ~Flags::S;
+        result == 0 ? main_flags |= Flags::Z : main_flags &= ~Flags::Z;
+        main[7] + (value & 0xf) > 0xf ? main_flags |= Flags::H : main_flags &= ~Flags::H;
+        result > 0xff ? main_flags |= Flags::P : main_flags &= ~Flags::P;
+        main_flags &= ~Flags::N;
+        result & 0x100 ? main_flags |= Flags::C : main_flags &= ~Flags::C;
+        break;
+    }
 }
 
 uint8_t CPU::execute()
