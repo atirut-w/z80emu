@@ -58,6 +58,12 @@ void CPU::alu(uint8_t op, uint8_t value)
     case 1: // ADC
         result = main[7] + value + (main_flags & Flags::C ? 1 : 0);
         break;
+    case 2: // SUB
+        result = main[7] - value;
+        break;
+    case 3: // SBC
+        result = main[7] - value - (main_flags & Flags::C ? 1 : 0);
+        break;
     }
 
     // TODO: Flags for subtraction, bitwise operations and compare
