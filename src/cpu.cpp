@@ -196,7 +196,29 @@ uint8_t CPU::execute()
             }
             else
             {
-                // TODO: ADD HL, rp[p]
+                // ADD HL, rp[p]
+                uint32_t result = read_rp(2) + read_rp(inst.p);
+
+                if (read_rp(2) & 0xfff + read_rp(inst.p) & 0xfff > 0xfff)
+                {
+                    main_flags |= Flags::H;
+                }
+                else
+                {
+                    main_flags &= ~Flags::H;
+                }
+
+                main_flags &= ~Flags::N;
+
+                if (result & 0x10000)
+                {
+                    main_flags |= Flags::C;
+                }
+                else
+                {
+                    main_flags &= ~Flags::C;
+                }
+
                 return 11;
             }
         case 6: // LD r[y], n
