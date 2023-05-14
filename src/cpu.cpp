@@ -71,12 +71,53 @@ void CPU::alu(uint8_t op, uint8_t value)
     {
     case 0:
     case 1:
-        (int8_t)result < 0 ? main_flags |= Flags::S : main_flags &= ~Flags::S;
-        result == 0 ? main_flags |= Flags::Z : main_flags &= ~Flags::Z;
-        (main[7] & 0x0f) + (value & 0x0f) > 0x0f ? main_flags |= Flags::H : main_flags &= ~Flags::H;
-        result > 0xff ? main_flags |= Flags::P : main_flags &= ~Flags::P;
+        if ((int8_t)result < 0)
+        {
+            main_flags |= Flags::S;
+        }
+        else
+        {
+            main_flags &= ~Flags::S;
+        }
+
+        if ((uint8_t)result == 0)
+        {
+            main_flags |= Flags::Z;
+        }
+        else
+        {
+            main_flags &= ~Flags::Z;
+        }
+
+        if ((main[7] & 0xf) + (value & 0xf) > 0xf)
+        {
+            main_flags |= Flags::H;
+        }
+        else
+        {
+            main_flags &= ~Flags::H;
+        }
+
+        if (result > 0xff)
+        {
+            main_flags |= Flags::P;
+        }
+        else
+        {
+            main_flags &= ~Flags::P;
+        }
+
         main_flags &= ~Flags::N;
-        result & 0x100 ? main_flags |= Flags::C : main_flags &= ~Flags::C;
+
+        if (result > 0xff)
+        {
+            main_flags |= Flags::C;
+        }
+        else
+        {
+            main_flags &= ~Flags::C;
+        }
+
         break;
     }
     main[7] = result & 0xff;
