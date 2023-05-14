@@ -55,6 +55,9 @@ void CPU::alu(uint8_t op, uint8_t value)
     case 0: // ADD
         result = main[7] + value;
         break;
+    case 1: // ADC
+        result = main[7] + value + (main_flags & Flags::C ? 1 : 0);
+        break;
     }
 
     main[7] = result & 0xFF;
