@@ -60,7 +60,6 @@ void CPU::alu(uint8_t op, uint8_t value)
         break;
     }
 
-    main[7] = result & 0xFF;
     // TODO: Flags for subtraction, bitwise operations and compare
     switch (op)
     {
@@ -74,6 +73,7 @@ void CPU::alu(uint8_t op, uint8_t value)
         result & 0x100 ? main_flags |= Flags::C : main_flags &= ~Flags::C;
         break;
     }
+    main[7] = result & 0xff;
 }
 
 uint8_t CPU::execute()
